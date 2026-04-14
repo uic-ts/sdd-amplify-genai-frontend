@@ -24,6 +24,7 @@ import { IntegrationTabs } from '../Integrations/IntegrationsTab';
 import { ApiKeys } from './AccountComponents/ApiKeys';
 import { Accounts } from './AccountComponents/Account';
 import { MCPServersTab } from './MCPServersTab';
+import { LakeshoreSettings } from './LakeshoreSettings';
 import { Account, noCoaAccount } from '@/types/accounts';
 import { getAccounts } from '@/services/accountService';
 import { noRateLimit } from '@/types/rateLimit';
@@ -279,6 +280,7 @@ export const SettingDialog: FC<Props> = ({ open, onClose, openToTab }) => {
     const [accountsUnsavedChanges, setAccountsUnsavedChanges] = useState(false);
     const [apiUnsavedChanges, setApiUnsavedChanges] = useState(false);
     const [mcpUnsavedChanges, setMcpUnsavedChanges] = useState(false);
+    const [lakeshoreUnsavedChanges, setLakeshoreUnsavedChanges] = useState(false);
     const [storageUnsavedChanges, setStorageUnsavedChanges] = useState(false);
     const [pendingStorageSelection, setPendingStorageSelection] = useState<string | null>(null);
    
@@ -296,6 +298,7 @@ export const SettingDialog: FC<Props> = ({ open, onClose, openToTab }) => {
       setAccountsUnsavedChanges(false);
       setApiUnsavedChanges(false);
       setMcpUnsavedChanges(false);
+      setLakeshoreUnsavedChanges(false);
       setStorageUnsavedChanges(false);
       setPendingStorageSelection(null);
       setHasUnsavedChanges(false);
@@ -340,7 +343,7 @@ export const SettingDialog: FC<Props> = ({ open, onClose, openToTab }) => {
     // }, [trackTab]);
 
     const otherChanges = () => {
-    return accountsUnsavedChanges || apiUnsavedChanges || mcpUnsavedChanges || storageUnsavedChanges;
+    return accountsUnsavedChanges || apiUnsavedChanges || mcpUnsavedChanges || lakeshoreUnsavedChanges || storageUnsavedChanges;
     }
 
 
@@ -534,6 +537,13 @@ export const SettingDialog: FC<Props> = ({ open, onClose, openToTab }) => {
                 title: mcpUnsavedChanges ? "Contains unsaved form data" : "Connect to MCP servers for extended tool capabilities",
                 content: <MCPServersTab open={open} setUnsavedChanges={setMcpUnsavedChanges}/>
               }] : []),
+
+              ///////////////////////////////////////////////////////////////////////////////
+              // On-Premises (Lakeshore) Tab
+              {label: `On-Premises${lakeshoreUnsavedChanges ? " *" : ""}`,
+                title: lakeshoreUnsavedChanges ? "Contains unsaved changes" : "Configure your on-premises Lakeshore endpoint",
+                content: <LakeshoreSettings open={open} setUnsavedChanges={setLakeshoreUnsavedChanges}/>
+              },
 
               ///////////////////////////////////////////////////////////////////////////////
               // Conversation Storage

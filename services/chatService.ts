@@ -2,6 +2,7 @@
 import {ChatBody, newMessage} from "@/types/chat";
 import {createParser, ParsedEvent, ReconnectInterval} from "eventsource-parser";
 import {v4 as uuidv4} from 'uuid';
+import {getSettings} from "@/utils/app/settings";
 
 export interface MetaHandler {
     status: (meta: any) => void;
@@ -60,6 +61,20 @@ export async function sendChatRequestWithDocuments(endpoint: string, accessToken
             time,
             requestId: uuidv4(),
             ...vendorProps
+        }
+    }
+
+    // Inject personal Lakeshore endpoint when the selected model is a Lakeshore provider model.
+    // These values are passed through to the JS Lambda via the options object and allow the user's
+    // personal tunnel URL/key to take precedence over the org-wide admin-configured endpoint.
+    if (chatBody.model.provider === 'Lakeshore') {
+        const lakeshoreConfig = getSettings({}).lakeshoreConfig;
+        if (lakeshoreConfig?.url) {
+            requestBody.options = {
+                ...requestBody.options,
+                lakeshoreUserEndpoint: lakeshoreConfig.url,
+                ...(lakeshoreConfig.key && { lakeshoreUserKey: lakeshoreConfig.key }),
+            };
         }
     }
 

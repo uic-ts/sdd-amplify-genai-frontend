@@ -1,5 +1,5 @@
 // Provider Types
-export const ModelProviders = ['Azure', 'OpenAI', 'Bedrock', 'Gemini'];
+export const ModelProviders = ['Azure', 'OpenAI', 'Bedrock', 'Gemini', 'Lakeshore'];
 
 // Used for updating data in the backend
 export enum AdminConfigTypes {
