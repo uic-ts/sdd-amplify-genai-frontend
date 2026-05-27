@@ -7,7 +7,8 @@ const SERVICE_NAME = "file";
 const uploadFileToS3 = (
     file: File,
     presignedUrl: string,
-    onProgress?: (progress: number) => void
+    onProgress?: (progress: number) => void,
+    ragEnabled: boolean = true
 ) => {
     const xhr = new XMLHttpRequest();
     const abortController = new AbortController();
@@ -56,6 +57,8 @@ const uploadFileToS3 = (
             // if your backend service requires a specific type, you'll need to provide it accordingly.
             xhr.setRequestHeader("Content-Type", "application/octet-stream");
         }
+
+        xhr.setRequestHeader("x-amz-meta-rag_enabled", String(ragEnabled).toLowerCase());
 
         xhr.send(file);
     });
@@ -165,7 +168,7 @@ export const addFile = async (metadata: AttachedDocument, file: File, onProgress
         if (onProgress) {
             onProgress(progress);
         }
-    });
+    }, ragEnabled);
 
     return {
         key: key,

@@ -15,7 +15,7 @@ on:
 
 jobs:
   docker:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64, rhel]
     # Only assign environment for push events to main/dev (not for PRs)
     environment: ${{ github.event_name != 'pull_request' && (github.ref_name == 'main' && 'production' || 'development') || '' }}
 
