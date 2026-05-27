@@ -1537,34 +1537,18 @@ const Home = ({
                 </div>
             </main>);
     } else {
+        // Auto-initiate SSO — no click required
+        signIn('cognito');
         return (
             <main
-                className={`flex h-screen w-screen flex-col text-sm text-black dark:text-white ${lightMode}`} 
+                className={`flex h-screen w-screen flex-col text-sm text-black dark:text-white ${lightMode}`}
                 style={{backgroundColor: lightMode === 'dark' ? 'black' : 'white'}}>
                 <div
                     className="flex flex-col items-center justify-center min-h-screen text-center text-black dark:text-white">
                     <div className="mb-8">
                         <Logo width={200} height={60} />
                     </div>
-                    <button
-                        onClick={() => signIn('cognito')}
-                        id="loginButton"
-                        className="shadow-md"
-                        style={{
-                            backgroundColor: 'white',
-                            border: '2px solid #ccc',
-                            color: 'black',
-                            fontWeight: 'bold',
-                            padding: '10px 20px',
-                            borderRadius: '5px',
-                            cursor: 'pointer',
-                            transition: 'background-color 0.3s ease-in-out',
-                        }}
-                        onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#48bb78'}
-                        onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'white'}
-                    >
-                        Login
-                    </button>
+                    <Loader />
                 </div>
             </main>
         );

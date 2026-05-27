@@ -12,6 +12,12 @@ export const authOptions = {
             clientSecret: process.env.COGNITO_CLIENT_SECRET,
             issuer: process.env.COGNITO_ISSUER,
             checks: 'nonce',
+            authorization: {
+                params: {
+                identity_provider: 'EntraID', // must match the IdP name in your Cognito user pool exactly
+                response_type: 'code',
+                },
+            },            
         })
     ],
     pages: {
