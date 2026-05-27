@@ -14,7 +14,7 @@ export const authOptions = {
             checks: 'nonce',
             authorization: {
                 params: {
-                identity_provider: 'EntraID', // must match the IdP name in your Cognito user pool exactly
+                identity_provider: 'MicrosoftEntraID', // must match the IdP name in your Cognito user pool exactly
                 response_type: 'code',
                 },
             },            
