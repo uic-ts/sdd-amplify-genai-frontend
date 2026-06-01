@@ -141,11 +141,15 @@ export interface EmbeddingsConfig  {
     outputTokenCost: number;
     inputTokenCost: number;
     cachedTokenCost: number;
+    inputCachedTokenCost: number;
+    inputWriteCachedTokenCost: number;
     description: string;
     exclusiveGroupAvailability: string[];
     supportsImages: boolean;
     supportsReasoning: boolean;
     supportsSystemPrompts: boolean;
+    supportsImageGeneration: boolean;
+    supportsVideo: boolean;
     systemPrompt: string;
     isAvailable: boolean;
     isBuiltIn: boolean;
