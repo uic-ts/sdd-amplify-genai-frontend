@@ -185,13 +185,14 @@ export const UserMenu: React.FC<UserMenuProps> = ({
   }, [email, showMtdCost, showUserMenu]);
 
   const federatedSignOut = async () => {
-    await signOut();
-    // Handle Cognito logout if needed
+    await signOut({ redirect: false });
+    const base = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`;
     if (cognitoDomain && cognitoClientId) {
-      const signoutRedirectUrl = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ''}`;
       window.location.replace(
-        `${cognitoDomain}/logout?client_id=${cognitoClientId}&logout_uri=${encodeURIComponent(signoutRedirectUrl)}`
+        `${cognitoDomain}/logout?client_id=${cognitoClientId}&logout_uri=${encodeURIComponent(`${base}/signed-out`)}`
       );
+    } else {
+      window.location.replace(`${base}/signed-out`);
     }
   };
 
