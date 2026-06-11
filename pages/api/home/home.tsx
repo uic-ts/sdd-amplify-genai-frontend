@@ -1482,6 +1482,8 @@ const Home = ({
                             <UserMenu
                                 email={user?.email}
                                 name={session?.user?.name}
+                                cognitoDomain={cognitoDomain ?? undefined}
+                                cognitoClientId={cognitoClientId ?? undefined}
                             />
 
 
