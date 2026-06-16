@@ -53,7 +53,7 @@ export default function SignedOut() {
               <ul className="flex flex-col gap-1.5">
                 {CHECKLIST_ITEMS.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-xs text-emerald-600 dark:text-emerald-400">
-                    <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-[9px] font-bold flex-shrink-0">
+                    <span aria-hidden="true" className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-[9px] font-bold flex-shrink-0">
                       ✓
                     </span>
                     {item}
