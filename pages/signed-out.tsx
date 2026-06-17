@@ -4,8 +4,6 @@ import { ThemeService } from '@/utils/whiteLabel/themeService';
 import { Logo } from '@/components/Logo/Logo';
 import { getWhiteLabelConfig } from '@/utils/whiteLabel/config';
 
-const appUrl = process.env.NEXT_PUBLIC_APP_URL?.trim() || '/';
-
 const CHECKLIST_ITEMS = [
   'Session terminated',
   'Credentials cleared',
@@ -14,10 +12,15 @@ const CHECKLIST_ITEMS = [
 
 export default function SignedOut() {
   const [mounted, setMounted] = useState(false);
+  const [appUrl, setAppUrl] = useState('/');
 
   useEffect(() => {
     const theme = ThemeService.getInitialTheme();
     ThemeService.applyTheme(theme);
+    if (typeof window !== 'undefined') {
+      const envUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
+      setAppUrl(envUrl && envUrl !== '/' ? envUrl : window.location.origin);
+    }
     setMounted(true);
   }, []);
 
