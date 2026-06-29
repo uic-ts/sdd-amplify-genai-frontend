@@ -212,5 +212,5 @@ export const getOperationIcon = (name: string | undefined) => {
   
   export const getDriveFileIntegrationTypes = (integrations: string[]) => {
     if (!integrations) return [];
-    return integrations.filter((i: string) => i.includes("drive") || i.includes("sharepoint"));
+    return integrations.filter((i: string) => i.includes("drive") || i.includes("sharepoint") || i.includes("box"));
   }

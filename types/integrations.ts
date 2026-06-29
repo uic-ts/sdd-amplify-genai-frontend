@@ -3,7 +3,8 @@ import { AttachedDocument } from './attacheddocument';
 
 export const integrationProviders = {
     Google: 'google',
-    Microsoft: 'microsoft'
+    Microsoft: 'microsoft',
+    Box: 'box'
   } as const;
   
 // Type for the TypeScript-friendly names (keys)
