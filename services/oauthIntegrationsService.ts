@@ -59,7 +59,7 @@ export const checkActiveIntegrations = async (integrations: string[]) => {
         method: 'GET',
         path: "",
         op: `/${i}/integrations`,
-        service: i
+        service: i === 'box' ? 'oauth' : i
       };
       const response = await doRequestOp(op);
       if (response.success && response.data) {
