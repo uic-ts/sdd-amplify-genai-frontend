@@ -411,6 +411,16 @@ export function useSendService() {
                         };
                     }
 
+                    // Inject explicit webSearch flag so backend receives opt-in/opt-out.
+                    // Backend checks body?.enableWebSearch first (line 514/522 in toolLoop.js).
+                    // Using top-level enableWebSearch avoids the path mismatch with options.options nesting.
+                    if (typeof message.data?.webSearch === 'boolean') {
+                        options = {
+                            ...(options || {}),
+                            enableWebSearch: message.data.webSearch
+                        };
+                    }
+
                     if (options) {
                         Object.assign(chatBody, options);
                     }

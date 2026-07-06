@@ -10,7 +10,8 @@ import {
     IconSettingsAutomation,
     IconUpload,
     IconCheck,
-    IconX
+    IconX,
+    IconWorldWww
 } from '@tabler/icons-react';
 import SaveActionsModal from './SaveActionsModal';
 import {
@@ -302,6 +303,7 @@ export const ChatInput = ({
         textareaRef
     });
     const [showAssistantSelect, setShowAssistantSelect] = useState(false);
+    const [webSearchEnabled, setWebSearchEnabled] = useState(false);
     const [documents, setDocuments] = useState<AttachedDocument[]>();
     const [documentState, setDocumentState] = useState<{ [key: string]: number }>({});
     const [documentMetadata, setDocumentMetadata] = useState<{ [key: string]: AttachedDocumentMetadata }>({});
@@ -509,7 +511,7 @@ export const ChatInput = ({
             content: messageContent, 
             label: messageLabel,
             type: type,
-            data: messageData,
+            data: { ...messageData, webSearch: featureFlags.webSearch ? webSearchEnabled : false },
             configuredTools: addedActions.length > 0 ? [...addedActions] : undefined
         });
 
@@ -1570,6 +1572,24 @@ export const ChatInput = ({
                         </button>
                         
                         </>}
+
+                        {featureFlags.webSearch && (
+                            <button
+                                id="toggleWebSearch"
+                                className={`chat-input-button rounded-sm p-1 transition-colors duration-150 ${
+                                    webSearchEnabled
+                                        ? 'text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 opacity-100'
+                                        : 'text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-opacity-50 dark:text-neutral-100 dark:hover:text-neutral-200'
+                                }`}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setWebSearchEnabled(!webSearchEnabled);
+                                }}
+                                title={webSearchEnabled ? 'Web Search: ON — click to disable' : 'Web Search: OFF — click to enable'}
+                            >
+                                <IconWorldWww size={20} />
+                            </button>
+                        )}
 
                         <div className='flex flex-row gap-2'>
 
