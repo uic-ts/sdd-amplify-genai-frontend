@@ -89,7 +89,10 @@ export const FileList: FC<Props> = ({ documents, setDocuments , documentStates, 
 
     const getLabel = (document:AttachedDocument) => {
         if(!document.name) { return 'Untitled Document'; }
-        return document.name.length > 12 ? document.name.slice(0, 12) + '...' : document.name;
+        if (document.type === 'website/url' || document.type === 'website/sitemap') {
+            return document.name.replace(/^(https?:\/\/)?(www\.)?/, '');
+        }
+        return document.name;
     }
 
     const getIconForFileList = (document:AttachedDocument) => {
@@ -107,21 +110,21 @@ export const FileList: FC<Props> = ({ documents, setDocuments , documentStates, 
             {documents?.map((document, i) => (
                 <div
                     key={i}
-                    className={`${isComplete(document) ? 'bg-white' : 'bg-yellow-400'} flex flex-row items-center justify-between border bg-white rounded-md px-1 py-1 ml-1 mr-1 shadow-md dark:shadow-lg`}
+                    className={`${isComplete(document) ? 'bg-white dark:bg-[#40414F]' : 'bg-yellow-400 dark:bg-yellow-600'} flex flex-row items-center justify-between border dark:border-neutral-600 rounded-md px-2 py-1 ml-1 mr-1 shadow-md dark:shadow-lg`}
                     style={{ maxWidth: '220px' }}
                 >
                     
                     {getIconForFileList(document)}
 
-                    <div className="ml-1" title={document.name}>
-                        <p className={`truncate font-medium text-sm ${isComplete(document) ? 'text-gray-800' : 'text-gray-800'}`}
+                    <div className="ml-1 flex-1 min-w-0" title={document.name}>
+                        <p className={`truncate font-medium text-sm ${isComplete(document) ? 'text-gray-800 dark:text-neutral-200' : 'text-gray-800 dark:text-gray-900'}`}
                             style={{ maxWidth: '160px' }}>
                             {i+1}. {getLabel(document)}
                         </p>
                     </div>
 
                     { allowRemoval && <button
-                            className="text-gray-400 hover:text-gray-600 transition-all"
+                            className="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-all ml-1"
                             onClick={(e) =>{
                                 e.preventDefault();
                                 e.stopPropagation();
